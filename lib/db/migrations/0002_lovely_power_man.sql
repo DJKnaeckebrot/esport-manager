@@ -1,0 +1,1 @@
+ALTER TABLE "org_members" ALTER COLUMN "user_id" SET DATA TYPE varchar(15);

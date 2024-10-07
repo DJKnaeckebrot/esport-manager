@@ -8,6 +8,34 @@
       "when": 1726443359662,
       "tag": "0000_soft_the_anarchist",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1728301233840,
+      "tag": "0001_chunky_the_hunter",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1728303043258,
+      "tag": "0002_lovely_power_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1728303102285,
+      "tag": "0003_wild_surge",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1728304322509,
+      "tag": "0004_dark_rocket_racer",
+      "breakpoints": true
     }
   ]
 }

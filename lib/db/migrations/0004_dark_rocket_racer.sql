@@ -1,0 +1,1 @@
+ALTER TABLE "org_members" ADD COLUMN "user_name" varchar(100) NOT NULL;
