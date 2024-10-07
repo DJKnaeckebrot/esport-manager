@@ -9,39 +9,34 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Edit, MoreHorizontal, Trash, X } from "lucide-react";
 import { Member } from "@/types";
+import { useRouter } from "next/navigation";
 
 interface CellActionProps {
   data: Member;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
+  const router = useRouter();
   return (
     <>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
+            <span className="sr-only">Menü</span>
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuLabel>Aktionen</DropdownMenuLabel>
           <DropdownMenuItem
-          // onClick={() =>
-          //   router.push(`/dashboard/applicant/academy/${data.userId}`)
-          // }
+            onClick={() => router.push(`/dashboard/mitglieder//${data.id}`)}
           >
-            <Edit className="mr-2 h-4 w-4" /> Edit
-          </DropdownMenuItem>
-          <DropdownMenuItem
-          //   onClick={() => setDenyOpen(true)}
-          >
-            <X className="mr-2 h-4 w-4" /> Deny
+            <Edit className="mr-2 h-4 w-4" /> Bearbeiten
           </DropdownMenuItem>
           <DropdownMenuItem
           //   onClick={() => setOpen(true)}
           >
-            <Trash className="mr-2 h-4 w-4" /> Delete
+            <Trash className="mr-2 h-4 w-4" /> Löschen
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

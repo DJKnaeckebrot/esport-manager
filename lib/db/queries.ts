@@ -99,9 +99,17 @@ export async function getActivityLogs() {
     .limit(10);
 }
 
-export async function getMembersForTeam(teamId: number) {
+export async function getOrgMembersForTeam(teamId: number) {
   const result = await db.query.orgMembers.findMany({
     where: eq(orgMembers.orgId, teamId),
+  });
+
+  return result;
+}
+
+export async function getOrgMember(userId: number) {
+  const result = await db.query.orgMembers.findFirst({
+    where: eq(orgMembers.id, userId),
   });
 
   return result;

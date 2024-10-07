@@ -1,6 +1,10 @@
 import { redirect } from "next/navigation";
 import { MemberTableClient } from "@/components/member/client";
-import { getMembersForTeam, getTeamForUser, getUser } from "@/lib/db/queries";
+import {
+  getOrgMembersForTeam,
+  getTeamForUser,
+  getUser,
+} from "@/lib/db/queries";
 import { Button } from "@/components/ui/button";
 import AddMemberModal from "@/components/member/add-member-modal";
 
@@ -17,7 +21,7 @@ export default async function MembersPage() {
     throw new Error("Team not found");
   }
 
-  const data = await getMembersForTeam(teamData.id);
+  const data = await getOrgMembersForTeam(teamData.id);
 
   if (!teamData) {
     throw new Error("Members not found");

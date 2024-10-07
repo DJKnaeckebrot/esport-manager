@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowUpDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { CellAction } from "./cell-actions";
 
 const statuses = {
   active: "text-green-400 bg-green-400/10",
@@ -50,5 +51,9 @@ export const columns: ColumnDef<Member>[] = [
         {row.original.activityStatus}
       </Badge>
     ),
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => <CellAction data={row.original} />,
   },
 ];

@@ -4,6 +4,7 @@ import { Manrope } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { UserProvider } from "@/lib/auth";
 import { getUser } from "@/lib/db/queries";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Next.js SaaS Starter",
@@ -37,6 +38,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <UserProvider userPromise={userPromise}>{children}</UserProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
