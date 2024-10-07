@@ -27,7 +27,6 @@ import {
   validatedAction,
   validatedActionWithUser,
 } from "@/lib/auth/middleware";
-import { Member } from "@/types";
 
 async function logActivity(
   teamId: number | null | undefined,
@@ -349,53 +348,6 @@ export const updateTeamName = validatedActionWithUser(
   }
 );
 
-const addOrgMemberSchema = z.object({
-  userId: z.string(),
-  userName: z.string(),
-  epicId: z.string(),
-  activityStatus: z.string(),
-});
-
-export const addOrgMember = validatedActionWithUser(
-  addOrgMemberSchema,
-  async (data, _, user) => {
-    const { userId, userName, epicId, activityStatus } = data;
-
-    console.log("Adding Member to Org: ", userName);
-
-    const userWithTeam = await getUserWithTeam(user.id);
-
-    if (!userWithTeam?.teamId) {
-      return { error: "User is not part of a team" };
-    }
-
-    const newUser: NewOrgMember = {
-      userName: userName,
-      userId: userId,
-      orgId: userWithTeam.teamId,
-      epicId,
-      activityStatus,
-    };
-
-    const [createdUser] = await db
-      .insert(orgMembers)
-      .values(newUser)
-      .returning();
-
-    if (!createdUser) {
-      return { error: "Failed to create user. Please try again." };
-    }
-
-    await logActivity(
-      userWithTeam.teamId,
-      user.id,
-      ActivityType.CREATE_ORG_MEMBER
-    );
-
-    return { success: "Member added successfully" };
-  }
-);
-
 const removeTeamMemberSchema = z.object({
   memberId: z.number(),
 });
@@ -493,23 +445,5 @@ export const inviteTeamMember = validatedActionWithUser(
     //await sendInvitationEmail(email, userWithTeam.team.name, role);
 
     return { success: "Invitation sent successfully" };
-  }
-);
-
-export const getMembers = validatedActionWithUser(
-  z.object({}),
-  async (_, __, user) => {
-    const userWithTeam = await getUserWithTeam(user.id);
-
-    if (!userWithTeam?.teamId) {
-      return { error: "User is not part of a team" };
-    }
-
-    const members = await db
-      .select()
-      .from(orgMembers)
-      .where(eq(orgMembers.orgId, userWithTeam.teamId));
-
-    return { members };
   }
 );
