@@ -32,6 +32,7 @@ export function EditMemberForm({ user }: InviteTeamMemberProps) {
     userName: user.userName || "", // Username
     epicId: user.epicId || "", // Epic ID
     activityStatus: user.activityStatus || "", // Activity status
+    comment: user.comment || "", //
   });
 
   const [updateState, updateAction, isUpdatePending] = useActionState<
@@ -93,6 +94,16 @@ export function EditMemberForm({ user }: InviteTeamMemberProps) {
               type="activityStatus"
               placeholder="Aktivitätsstatus"
               value={formData.activityStatus}
+              onChange={handleChange}
+              required
+            />
+            <Label htmlFor="comment">Kommentar</Label>
+            <Input
+              id="text"
+              name="comment"
+              type="comment"
+              placeholder="Kommentar"
+              value={formData.comment}
               onChange={handleChange}
               required
             />

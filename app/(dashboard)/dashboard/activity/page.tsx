@@ -29,6 +29,9 @@ const iconMap: Record<ActivityType, LucideIcon> = {
   [ActivityType.INVITE_TEAM_MEMBER]: Mail,
   [ActivityType.ACCEPT_INVITATION]: CheckCircle,
   [ActivityType.UPDATE_TEAM]: Mail,
+  [ActivityType.CREATE_ORG_TEAM]: UserPlus,
+  [ActivityType.DELETE_ORG_TEAM]: UserMinus,
+  [ActivityType.UPDATE_ORG_TEAM]: Settings,
 };
 
 function getRelativeTime(date: Date) {
@@ -81,6 +84,8 @@ function formatAction(action: ActivityType): string {
 export default async function ActivityPage() {
   const logs = await getActivityLogs();
 
+  console.log(logs);
+
   return (
     <section className="flex-1 p-4 lg:p-8">
       <h1 className="text-lg lg:text-2xl font-medium text-gray-900 dark:text-gray-100 mb-6">
@@ -106,7 +111,8 @@ export default async function ActivityPage() {
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                        {formattedAction}
+                        {formattedAction}{" "}
+                        {log.targetName && `${log.targetName}`}
                         {log.ipAddress && ` from IP ${log.ipAddress}`}
                       </p>
                       <p className="text-xs text-gray-500 dark:text-gray-400">

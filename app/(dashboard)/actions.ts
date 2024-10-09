@@ -28,7 +28,8 @@ async function logActivity(
   teamId: number | null | undefined,
   userId: number,
   type: ActivityType,
-  ipAddress?: string
+  ipAddress?: string,
+  targetName?: string
 ) {
   if (teamId === null || teamId === undefined) {
     return;
@@ -38,6 +39,7 @@ async function logActivity(
     userId,
     action: type,
     ipAddress: ipAddress || "",
+    targetName: targetName || "",
   };
   await db.insert(activityLogs).values(newActivity);
 }
@@ -100,7 +102,9 @@ export const addOrgMember = validatedActionWithUser(
     await logActivity(
       userWithTeam.teamId,
       user.id,
-      ActivityType.CREATE_ORG_MEMBER
+      ActivityType.CREATE_ORG_MEMBER,
+      undefined,
+      newUser.userName
     );
 
     return { success: "Member added successfully" };
@@ -139,7 +143,9 @@ export const deleteOrgMember = validatedActionWithUser(
     await logActivity(
       userWithTeam.teamId,
       user.id,
-      ActivityType.DELETE_ORG_MEMBER
+      ActivityType.DELETE_ORG_MEMBER,
+      undefined,
+      id.toString()
     );
 
     return { success: "Member has been deleted" };
@@ -152,6 +158,7 @@ const updateOrgMemberSchema = z.object({
   userName: z.string(),
   epicId: z.string(),
   userId: z.string(),
+  comment: z.string(),
 });
 
 export const updateOrgMember = validatedActionWithUser(
@@ -188,7 +195,9 @@ export const updateOrgMember = validatedActionWithUser(
     await logActivity(
       userWithTeam.teamId,
       user.id,
-      ActivityType.UPDATE_ORG_MEMBER
+      ActivityType.UPDATE_ORG_MEMBER,
+      undefined,
+      updatedData.userName
     );
 
     return { success: "Member has been updated" };

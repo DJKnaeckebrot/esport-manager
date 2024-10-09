@@ -27,6 +27,10 @@ import {
   validatedAction,
   validatedActionWithUser,
 } from "@/lib/auth/middleware";
+import { Resend } from "resend";
+import { InviteEmailTemplate } from "./invite-email-template";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function logActivity(
   teamId: number | null | undefined,
@@ -396,6 +400,12 @@ export const inviteTeamMember = validatedActionWithUser(
       return { error: "User is not part of a team" };
     }
 
+    const team = await db
+      .select()
+      .from(teams)
+      .where(eq(teams.id, userWithTeam.teamId))
+      .limit(1);
+
     const existingMember = await db
       .select()
       .from(users)
@@ -435,6 +445,14 @@ export const inviteTeamMember = validatedActionWithUser(
       status: "pending",
     });
 
+    const invite = await db
+      .select()
+      .from(invitations)
+      .where(
+        and(eq(invitations.email, email), eq(invitations.invitedBy, user.id))
+      )
+      .limit(1);
+
     await logActivity(
       userWithTeam.teamId,
       user.id,
@@ -442,6 +460,31 @@ export const inviteTeamMember = validatedActionWithUser(
     );
 
     // TODO: Send invitation email and include ?inviteId={id} to sign-up URL
+
+    try {
+      const { data, error } = await resend.emails.send({
+        from: "E-Sports Manager <esports@mail.djkb.app>",
+        to: [email],
+        subject: "Du wurdest zu einem Team eingeladen",
+        replyTo: "info@djkb.app",
+        react: InviteEmailTemplate({
+          emailAddress: email,
+          senderName: userWithTeam.user.name ?? "Team Owner",
+          teamName: team[0].name,
+          role,
+          id: invite[0].id,
+        }),
+      });
+
+      if (error) {
+        return { error: `Error sending out invite: ${error}` };
+      }
+
+      return { success: "Invitation sent successfully" };
+    } catch (error) {
+      return { error: `Error sending out invite: ${error}` };
+    }
+
     //await sendInvitationEmail(email, userWithTeam.team.name, role);
 
     return { success: "Invitation sent successfully" };

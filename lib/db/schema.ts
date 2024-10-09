@@ -7,6 +7,7 @@ import {
   integer,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
+import { object } from "zod";
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
@@ -51,6 +52,7 @@ export const activityLogs = pgTable("activity_logs", {
   userId: integer("user_id").references(() => users.id),
   action: text("action").notNull(),
   timestamp: timestamp("timestamp").notNull().defaultNow(),
+  targetName: varchar("target_name", { length: 100 }),
   ipAddress: varchar("ip_address", { length: 45 }),
 });
 
@@ -77,6 +79,27 @@ export const orgMembers = pgTable("org_members", {
     .references(() => teams.id),
   epicId: varchar("epic_id", { length: 50 }).notNull(),
   activityStatus: varchar("activity_status", { length: 50 }).notNull(),
+  comment: varchar("comment", { length: 255 }),
+  joinedAt: timestamp("joined_at").notNull().defaultNow(),
+});
+
+export const orgTeams = pgTable("org_teams", {
+  id: serial("id").primaryKey(),
+  orgId: integer("org_id")
+    .notNull()
+    .references(() => teams.id),
+  teamName: integer("teamName").notNull(),
+});
+
+export const orgTeamMembers = pgTable("org_team_members", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id")
+    .notNull()
+    .references(() => users.id),
+  teamId: integer("team_id")
+    .notNull()
+    .references(() => teams.id),
+  role: varchar("role", { length: 50 }).notNull(),
   joinedAt: timestamp("joined_at").notNull().defaultNow(),
 });
 
@@ -84,6 +107,10 @@ export const teamsRelations = relations(teams, ({ many }) => ({
   teamMembers: many(teamMembers),
   activityLogs: many(activityLogs),
   invitations: many(invitations),
+}));
+
+export const orgTeamsRelations = relations(orgTeams, ({ many }) => ({
+  orgTeamMembers: many(orgTeamMembers),
 }));
 
 export const usersRelations = relations(users, ({ many }) => ({
@@ -128,6 +155,8 @@ export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 export type OrgMember = typeof orgMembers.$inferSelect;
 export type NewOrgMember = typeof orgMembers.$inferInsert;
+export type OrgTeam = typeof orgTeams.$inferSelect;
+export type NewOrgTeam = typeof orgTeams.$inferInsert;
 export type Team = typeof teams.$inferSelect;
 export type NewTeam = typeof teams.$inferInsert;
 export type TeamMember = typeof teamMembers.$inferSelect;
@@ -157,4 +186,7 @@ export enum ActivityType {
   CREATE_ORG_MEMBER = "CREATE_ORG_MEMBER",
   DELETE_ORG_MEMBER = "DELETE_ORG_MEMBER",
   UPDATE_ORG_MEMBER = "UPDATE_ORG_MEMBER",
+  CREATE_ORG_TEAM = "CREATE_ORG_TEAM",
+  DELETE_ORG_TEAM = "DELETE_ORG_TEAM",
+  UPDATE_ORG_TEAM = "UPDATE_ORG_TEAM",
 }

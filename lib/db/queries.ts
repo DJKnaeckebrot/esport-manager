@@ -84,6 +84,20 @@ export async function getActivityLogs() {
     throw new Error("User not authenticated");
   }
 
+  // Fetch the user's team ID
+  const userTeam = await db
+    .select({ teamId: teamMembers.teamId })
+    .from(teamMembers)
+    .where(eq(teamMembers.userId, user.id))
+    .limit(1);
+
+  if (userTeam.length === 0) {
+    throw new Error("User is not part of any team");
+  }
+
+  const teamId = userTeam[0].teamId;
+
+  // Fetch activity logs for the user's team
   return await db
     .select({
       id: activityLogs.id,
@@ -91,10 +105,11 @@ export async function getActivityLogs() {
       timestamp: activityLogs.timestamp,
       ipAddress: activityLogs.ipAddress,
       userName: users.name,
+      targetName: activityLogs.targetName,
     })
     .from(activityLogs)
     .leftJoin(users, eq(activityLogs.userId, users.id))
-    .where(eq(activityLogs.userId, user.id))
+    .where(eq(activityLogs.teamId, teamId))
     .orderBy(desc(activityLogs.timestamp))
     .limit(10);
 }
