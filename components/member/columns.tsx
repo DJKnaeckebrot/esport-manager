@@ -2,9 +2,10 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, Search } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { CellAction } from "./cell-actions";
@@ -55,5 +56,18 @@ export const columns: ColumnDef<OrgMember>[] = [
   {
     id: "actions",
     cell: ({ row }) => <CellAction data={row.original} />,
+  },
+  {
+    id: "track",
+    cell: ({ row }) => (
+      <Button asChild variant="outline" size="icon">
+        <Search className="h-4 w-4" />
+        <Link
+          href={`https://rocketleague.tracker.network/rocket-league/profile/epic/${row.original.epicId}/overview`}
+        >
+          Tracken
+        </Link>
+      </Button>
+    ),
   },
 ];
