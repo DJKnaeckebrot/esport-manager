@@ -8,17 +8,29 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Edit, MoreHorizontal, Trash, X } from "lucide-react";
-import { Member } from "@/types";
+import { type OrgMember } from "@/lib/db/schema";
 import { useRouter } from "next/navigation";
+import { AlertModal } from "@/components/delete-popover";
+import React, { useState } from "react";
 
 interface CellActionProps {
-  data: Member;
+  data: OrgMember;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
+
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   return (
     <>
+      <AlertModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        userId={data.id}
+        loading={loading}
+      />
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
@@ -29,14 +41,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Aktionen</DropdownMenuLabel>
           <DropdownMenuItem
-            onClick={() => router.push(`/dashboard/mitglieder//${data.id}`)}
+            onClick={() => router.push(`/dashboard/mitglieder/${data.id}`)}
           >
             <Edit className="mr-2 h-4 w-4" /> Bearbeiten
           </DropdownMenuItem>
-          <DropdownMenuItem
-          //   onClick={() => setOpen(true)}
-          >
-            <Trash className="mr-2 h-4 w-4" /> Löschen
+          <DropdownMenuItem onClick={() => setOpen(true)}>
+            Löschen
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
