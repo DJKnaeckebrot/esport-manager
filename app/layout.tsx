@@ -4,7 +4,7 @@ import { Manrope } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { UserProvider } from "@/lib/auth";
 import { getUser } from "@/lib/db/queries";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Next.js SaaS Starter",
