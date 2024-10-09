@@ -23,6 +23,8 @@ const iconMap: Record<ActivityType, LucideIcon> = {
   [ActivityType.UPDATE_ACCOUNT]: Settings,
   [ActivityType.CREATE_TEAM]: UserPlus,
   [ActivityType.CREATE_ORG_MEMBER]: UserPlus,
+  [ActivityType.DELETE_ORG_MEMBER]: UserMinus,
+  [ActivityType.UPDATE_ORG_MEMBER]: Settings,
   [ActivityType.REMOVE_TEAM_MEMBER]: UserMinus,
   [ActivityType.INVITE_TEAM_MEMBER]: Mail,
   [ActivityType.ACCEPT_INVITATION]: CheckCircle,
@@ -61,6 +63,10 @@ function formatAction(action: ActivityType): string {
       return "You created a new team";
     case ActivityType.CREATE_ORG_MEMBER:
       return "You created a orga member";
+    case ActivityType.DELETE_ORG_MEMBER:
+      return "You deleted a orga member";
+    case ActivityType.UPDATE_ORG_MEMBER:
+      return "You updated a orga member";
     case ActivityType.REMOVE_TEAM_MEMBER:
       return "You removed a team member";
     case ActivityType.INVITE_TEAM_MEMBER:
@@ -77,7 +83,7 @@ export default async function ActivityPage() {
 
   return (
     <section className="flex-1 p-4 lg:p-8">
-      <h1 className="text-lg lg:text-2xl font-medium text-gray-900 mb-6">
+      <h1 className="text-lg lg:text-2xl font-medium text-gray-900 dark:text-gray-100 mb-6">
         Activity Log
       </h1>
       <Card>
@@ -99,11 +105,11 @@ export default async function ActivityPage() {
                       <Icon className="w-5 h-5 text-orange-600" />
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
                         {formattedAction}
                         {log.ipAddress && ` from IP ${log.ipAddress}`}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
                         {getRelativeTime(new Date(log.timestamp))}
                       </p>
                     </div>
