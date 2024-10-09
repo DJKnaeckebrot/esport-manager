@@ -3,6 +3,12 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import { Badge } from "@/components/ui/badge";
 import { ArrowUpDown, Search } from "lucide-react";
@@ -60,11 +66,20 @@ export const columns: ColumnDef<OrgMember>[] = [
   {
     id: "track",
     cell: ({ row }) => (
-      <Link
-        href={`https://rocketleague.tracker.network/rocket-league/profile/epic/${row.original.epicId}/overview`}
-      >
-        <Search className="h-4 w-4" /> Tracken
-      </Link>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <Link
+              href={`https://rocketleague.tracker.network/rocket-league/profile/epic/${row.original.epicId}/overview`}
+            >
+              <Search className="h-4 w-4" />
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Tracken</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     ),
   },
 ];
