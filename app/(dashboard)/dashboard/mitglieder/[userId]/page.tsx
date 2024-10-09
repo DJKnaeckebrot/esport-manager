@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { MemberTableClient } from "@/components/member/client";
 import { getOrgMember, getUser } from "@/lib/db/queries";
+import { EditMemberForm } from "@/components/member/edit-member-form";
 
 export default async function SingleMemberPage({
   params,
@@ -25,7 +26,9 @@ export default async function SingleMemberPage({
         Member Details für {userData.userName}
       </h1>
 
-      <div className="mt-8"></div>
+      <div className="mt-8">
+        <EditMemberForm user={userData} />
+      </div>
     </section>
   );
 }

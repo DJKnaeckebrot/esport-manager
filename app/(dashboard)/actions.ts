@@ -106,3 +106,91 @@ export const addOrgMember = validatedActionWithUser(
     return { success: "Member added successfully" };
   }
 );
+
+const deleteOrgMemberSchema = z.object({
+  id: z.string(),
+});
+
+export const deleteOrgMember = validatedActionWithUser(
+  deleteOrgMemberSchema,
+  async (data, _, user) => {
+    //const { id } = data;
+    const id = Number(data.id);
+
+    if (isNaN(id)) {
+      return { error: "Invalid ID" };
+    }
+
+    const userWithTeam = await getUserWithTeam(user.id);
+
+    if (!userWithTeam?.teamId) {
+      return { error: "User is not part of a team" };
+    }
+
+    await db
+      .delete(orgMembers)
+      .where(
+        and(
+          eq(orgMembers.id, id),
+          eq(orgMembers.orgId, userWithTeam?.teamId ?? 0)
+        )
+      );
+
+    await logActivity(
+      userWithTeam.teamId,
+      user.id,
+      ActivityType.DELETE_ORG_MEMBER
+    );
+
+    return { success: "Member has been deleted" };
+  }
+);
+
+const updateOrgMemberSchema = z.object({
+  id: z.string(),
+  activityStatus: z.string(),
+  userName: z.string(),
+  epicId: z.string(),
+  userId: z.string(),
+});
+
+export const updateOrgMember = validatedActionWithUser(
+  updateOrgMemberSchema,
+  async (data, _, user) => {
+    //const { id } = data;
+    const id = Number(data.id);
+
+    if (isNaN(id)) {
+      return { error: "Invalid ID" };
+    }
+
+    const userWithTeam = await getUserWithTeam(user.id);
+
+    if (!userWithTeam?.teamId) {
+      return { error: "User is not part of a team" };
+    }
+
+    const updatedData = {
+      ...data,
+      id,
+    };
+
+    await db
+      .update(orgMembers)
+      .set(updatedData)
+      .where(
+        and(
+          eq(orgMembers.id, id),
+          eq(orgMembers.orgId, userWithTeam?.teamId ?? 0)
+        )
+      );
+
+    await logActivity(
+      userWithTeam.teamId,
+      user.id,
+      ActivityType.UPDATE_ORG_MEMBER
+    );
+
+    return { success: "Member has been updated" };
+  }
+);
