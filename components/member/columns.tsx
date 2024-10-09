@@ -60,14 +60,11 @@ export const columns: ColumnDef<OrgMember>[] = [
   {
     id: "track",
     cell: ({ row }) => (
-      <Button asChild variant="outline" size="icon">
-        <Search className="h-4 w-4" />
-        <Link
-          href={`https://rocketleague.tracker.network/rocket-league/profile/epic/${row.original.epicId}/overview`}
-        >
-          Tracken
-        </Link>
-      </Button>
+      <Link
+        href={`https://rocketleague.tracker.network/rocket-league/profile/epic/${row.original.epicId}/overview`}
+      >
+        <Search className="h-4 w-4" /> Tracken
+      </Link>
     ),
   },
 ];
