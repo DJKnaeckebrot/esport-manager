@@ -85,7 +85,18 @@ export function Settings({ teamData }: { teamData: TeamDataWithMembers }) {
                     </p>
                   </div>
                 </div>
-                {index > 1 ? (
+                {/* <form action={removeAction}>
+                  <input type="hidden" name="memberId" value={member.id} />
+                  <Button
+                    type="submit"
+                    variant="outline"
+                    size="sm"
+                    disabled={isRemovePending}
+                  >
+                    {isRemovePending ? "Removing..." : "Remove"}
+                  </Button>
+                </form> */}
+                {index >= 1 ? (
                   <form action={removeAction}>
                     <input type="hidden" name="memberId" value={member.id} />
                     <Button
