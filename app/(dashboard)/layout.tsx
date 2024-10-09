@@ -32,7 +32,34 @@ function Header() {
     <header className="border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <Link href="/" className="flex items-center">
-          <CircleIcon className="h-6 w-6 text-orange-500" />
+          <svg
+            version="1.2"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 700 700"
+            width="50"
+            height="50"
+            className="dark:fill-white fill-black"
+          >
+            <title>e logo</title>
+            <g id="Layer 1">
+              <path
+                id="Form 1"
+                fillRule="evenodd"
+                d="m138.6 208.3c0.2 3.4 0.4 98.7 0.4 98.7l305-196-76-50c0 0-229.2 147.5-229.4 147.3z"
+              />
+              <path
+                id="Form 2"
+                fillRule="evenodd"
+                d="m102 461l76 49 183-116-1-99z"
+              />
+              <path
+                id="Form 3"
+                fillRule="evenodd"
+                d="m280 575l75 51 222-145-1-98z"
+              />
+            </g>
+          </svg>
+          {/* <CircleIcon className="h-6 w-6 text-orange-500" /> */}
           <span className="ml-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
             E-Sports Manager
           </span>
@@ -42,7 +69,7 @@ function Header() {
             href="/pricing"
             className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
           >
-            Preis
+            Preise
           </Link>
           {user ? (
             <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>

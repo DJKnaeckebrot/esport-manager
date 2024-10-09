@@ -24,12 +24,36 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
     <div className="min-h-[100dvh] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
-          <CircleIcon className="h-12 w-12 text-orange-500" />
+          <svg
+            version="1.2"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 700 700"
+            width="50"
+            height="50"
+            className="dark:fill-white fill-black"
+          >
+            <title>e logo</title>
+            <g id="Layer 1">
+              <path
+                id="Form 1"
+                fillRule="evenodd"
+                d="m138.6 208.3c0.2 3.4 0.4 98.7 0.4 98.7l305-196-76-50c0 0-229.2 147.5-229.4 147.3z"
+              />
+              <path
+                id="Form 2"
+                fillRule="evenodd"
+                d="m102 461l76 49 183-116-1-99z"
+              />
+              <path
+                id="Form 3"
+                fillRule="evenodd"
+                d="m280 575l75 51 222-145-1-98z"
+              />
+            </g>
+          </svg>
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-100">
-          {mode === "signin"
-            ? "Sign in to your account"
-            : "Create your account"}
+          {mode === "signin" ? "Melde dich an" : "Erstelle einen Account"}
         </h2>
       </div>
 
@@ -43,7 +67,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
               htmlFor="email"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Email
+              E-Mail
             </Label>
             <div className="mt-1">
               <Input
@@ -54,7 +78,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                 required
                 maxLength={50}
                 className="appearance-none rounded-full relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 dark:text-gray-200 focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
-                placeholder="Enter your email"
+                placeholder="E-Mail Adresse"
               />
             </div>
           </div>
@@ -64,7 +88,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
               htmlFor="password"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Password
+              Passwort
             </Label>
             <div className="mt-1">
               <Input
@@ -78,7 +102,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                 minLength={8}
                 maxLength={100}
                 className="appearance-none rounded-full relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 dark:text-gray-200 focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
-                placeholder="Enter your password"
+                placeholder="Dein Passwort"
               />
             </div>
           </div>
@@ -99,9 +123,9 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                   Loading...
                 </>
               ) : mode === "signin" ? (
-                "Sign in"
+                "Anmelden"
               ) : (
-                "Sign up"
+                "Registrieren"
               )}
             </Button>
           </div>
@@ -115,8 +139,8 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
             <div className="relative flex justify-center text-sm">
               <span className="px-2 bg-gray-50 dark:bg-gray-900 dark:text-gray-400 text-gray-500">
                 {mode === "signin"
-                  ? "New to our platform?"
-                  : "Already have an account?"}
+                  ? "Neu bei uns?"
+                  : "Du hast schon einen Account?"}
               </span>
             </div>
           </div>
@@ -128,9 +152,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
               }${priceId ? `&priceId=${priceId}` : ""}`}
               className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-full shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
             >
-              {mode === "signin"
-                ? "Create an account"
-                : "Sign in to existing account"}
+              {mode === "signin" ? "Erstelle einen Account" : "Melde dich an"}
             </Link>
           </div>
         </div>
