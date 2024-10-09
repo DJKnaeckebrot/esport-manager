@@ -15,6 +15,7 @@ import { useUser } from "@/lib/auth";
 import { signOut } from "@/app/(login)/actions";
 import { useRouter } from "next/navigation";
 import { ModeToggle } from "@/components/theme-switch";
+import Footer from "@/components/footer";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -91,6 +92,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <section className="flex flex-col min-h-screen">
       <Header />
       {children}
+      <Footer />
     </section>
   );
 }

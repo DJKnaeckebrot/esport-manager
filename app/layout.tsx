@@ -7,8 +7,8 @@ import { getUser } from "@/lib/db/queries";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
-  title: "Next.js SaaS Starter",
-  description: "Get started quickly with Next.js, Postgres, and Stripe.",
+  title: "E-Sports Manager",
+  description: "Verwalte deine E-Sports Teams und Spieler",
 };
 
 export const viewport: Viewport = {
