@@ -1,12 +1,12 @@
 "use client";
 import { MemberDataTable } from "@/components/member/data-table";
 //import { User } from "@/constants/data";
-import { Member } from "@/types";
 import { useRouter } from "next/navigation";
 import { columns } from "./columns";
+import { OrgMember } from "@/lib/db/schema";
 
 interface ProductsClientProps {
-  data: Member[];
+  data: OrgMember[];
 }
 
 export const MemberTableClient: React.FC<ProductsClientProps> = ({ data }) => {

@@ -1,6 +1,5 @@
 "use client";
 
-import { Member } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 
@@ -9,13 +8,14 @@ import { ArrowUpDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { CellAction } from "./cell-actions";
+import { OrgMember } from "@/lib/db/schema";
 
 const statuses = {
   active: "text-green-400 bg-green-400/10",
   inactive: "text-rose-400 bg-rose-400/10",
 };
 
-export const columns: ColumnDef<Member>[] = [
+export const columns: ColumnDef<OrgMember>[] = [
   {
     accessorKey: "userId",
     header: "User ID",
