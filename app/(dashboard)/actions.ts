@@ -265,6 +265,63 @@ export const deleteOrgMember = validatedActionWithUser(
   }
 );
 
+const updateOrgApplicantSchema = z.object({
+  id: z.string(),
+  userId: z.string(),
+  userName: z.string(),
+  epicId: z.string(),
+  name: z.string(),
+  rank: z.string(),
+  origin: z.string(),
+  playStyle: z.string(),
+  about: z.string(),
+  birthday: z.date(),
+  status: z.string(),
+});
+
+export const updateOrgApplicant = validatedActionWithUser(
+  updateOrgApplicantSchema,
+  async (data, _, user) => {
+    //const { id } = data;
+    const id = Number(data.id);
+
+    if (isNaN(id)) {
+      return { error: "Invalid ID" };
+    }
+
+    const userWithTeam = await getUserWithTeam(user.id);
+
+    if (!userWithTeam?.teamId) {
+      return { error: "User is not part of a team" };
+    }
+
+    const updatedData = {
+      ...data,
+      id,
+    };
+
+    await db
+      .update(orgApplicants)
+      .set(updatedData)
+      .where(
+        and(
+          eq(orgApplicants.id, id),
+          eq(orgApplicants.orgId, userWithTeam?.teamId ?? 0)
+        )
+      );
+
+    await logActivity(
+      userWithTeam.teamId,
+      user.id,
+      ActivityType.UPDATE_ORG_APPLICANT,
+      undefined,
+      updatedData.userName
+    );
+
+    return { success: "Applicant has been updated" };
+  }
+);
+
 const updateOrgMemberSchema = z.object({
   id: z.string(),
   activityStatus: z.string(),

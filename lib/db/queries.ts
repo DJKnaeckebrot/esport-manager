@@ -1,6 +1,13 @@
 import { desc, and, eq, isNull } from "drizzle-orm";
 import { db } from "./drizzle";
-import { activityLogs, orgMembers, teamMembers, teams, users } from "./schema";
+import {
+  activityLogs,
+  orgApplicants,
+  orgMembers,
+  teamMembers,
+  teams,
+  users,
+} from "./schema";
 import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/auth/session";
 
@@ -133,6 +140,14 @@ export async function getOrgApplicantsForTeam(teamId: number) {
 export async function getOrgMember(userId: number) {
   const result = await db.query.orgMembers.findFirst({
     where: eq(orgMembers.id, userId),
+  });
+
+  return result;
+}
+
+export async function getOrgApplicant(userId: number) {
+  const result = await db.query.orgApplicants.findFirst({
+    where: eq(orgApplicants.id, userId),
   });
 
   return result;

@@ -5,6 +5,13 @@ import { addOrgApplicant } from "@/app/(dashboard)/actions";
 import { useActionState, useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "../ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "../ui/textarea";
@@ -79,23 +86,42 @@ export default function AddApplicantModal() {
                 className="mb-4"
               />
               <Label htmlFor="playStyle">Spielstil</Label>
-              <Input
+              <Select name="playStyle">
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Spielstil des Bewerber" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="controller">Controller</SelectItem>
+                  <SelectItem value="KBM">KBM</SelectItem>
+                </SelectContent>
+              </Select>
+              {/* <Input
                 id="playStyle"
                 name="playStyle"
                 type="text"
                 placeholder="Spielstil des Bewerber (KBM/Controller)"
                 required
                 className="mb-4"
-              />
+              /> */}
               <Label htmlFor="origin">Herkunft</Label>
-              <Input
+              <Select name="origin">
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Die Herkunft des Bewerber" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="deutschland">Deutschland</SelectItem>
+                  <SelectItem value="östereich">Östereich</SelectItem>
+                  <SelectItem value="schweiz">Schweiz</SelectItem>
+                </SelectContent>
+              </Select>
+              {/* <Input
                 id="origin"
                 name="origin"
                 type="text"
                 placeholder="Die Herkunft des Bewerber"
                 required
                 className="mb-4"
-              />
+              /> */}
               <Label htmlFor="about">Über</Label>
               <Textarea
                 id="about"
@@ -155,14 +181,25 @@ export default function AddApplicantModal() {
                 className="mb-4"
               />
               <Label htmlFor="status">Status</Label>
-              <Input
+              <Select name="status">
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Status des Bewerber" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pending">Ausstehend</SelectItem>
+                  <SelectItem value="invited">Eingeladen</SelectItem>
+                  <SelectItem value="accepted">Angenommen</SelectItem>
+                  <SelectItem value="denied">Abgelehnt</SelectItem>
+                </SelectContent>
+              </Select>
+              {/* <Input
                 id="status"
                 name="status"
                 type="text"
                 value={"pending"}
                 required
                 className="mb-4"
-              />
+              /> */}
               {addState?.error && (
                 <p className="text-red-500 mt-4">{addState.error}</p>
               )}
