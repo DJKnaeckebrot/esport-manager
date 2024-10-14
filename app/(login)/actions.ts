@@ -353,7 +353,7 @@ export const updateTeamName = validatedActionWithUser(
 );
 
 const removeTeamMemberSchema = z.object({
-  memberId: z.number(),
+  memberId: z.string(),
 });
 
 export const removeTeamMember = validatedActionWithUser(
@@ -361,6 +361,8 @@ export const removeTeamMember = validatedActionWithUser(
   async (data, _, user) => {
     const { memberId } = data;
     const userWithTeam = await getUserWithTeam(user.id);
+
+    const memberIdInt = parseInt(memberId);
 
     if (!userWithTeam?.teamId) {
       return { error: "User is not part of a team" };
@@ -370,7 +372,7 @@ export const removeTeamMember = validatedActionWithUser(
       .delete(teamMembers)
       .where(
         and(
-          eq(teamMembers.id, memberId),
+          eq(teamMembers.id, memberIdInt),
           eq(teamMembers.teamId, userWithTeam.teamId)
         )
       );
