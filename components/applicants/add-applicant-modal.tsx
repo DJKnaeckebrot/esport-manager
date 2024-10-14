@@ -21,6 +21,10 @@ export default function AddApplicantModal() {
   >(addOrgApplicant, { error: "", success: "" });
   const [showAddMenu, setShowAddMenu] = useState(false);
 
+  if (!isAddPending && addState?.success) {
+    setShowAddMenu(false);
+  }
+
   return (
     <>
       <Button
