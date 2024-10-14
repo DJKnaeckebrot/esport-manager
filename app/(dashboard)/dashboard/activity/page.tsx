@@ -32,6 +32,9 @@ const iconMap: Record<ActivityType, LucideIcon> = {
   [ActivityType.CREATE_ORG_TEAM]: UserPlus,
   [ActivityType.DELETE_ORG_TEAM]: UserMinus,
   [ActivityType.UPDATE_ORG_TEAM]: Settings,
+  [ActivityType.CREATE_ORG_APPLICANT]: UserPlus,
+  [ActivityType.DELETE_ORG_APPLICANT]: UserMinus,
+  [ActivityType.UPDATE_ORG_APPLICANT]: Settings,
 };
 
 function getRelativeTime(date: Date) {
