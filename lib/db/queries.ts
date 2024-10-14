@@ -122,6 +122,14 @@ export async function getOrgMembersForTeam(teamId: number) {
   return result;
 }
 
+export async function getOrgApplicantsForTeam(teamId: number) {
+  const result = await db.query.orgApplicants.findMany({
+    where: eq(orgMembers.orgId, teamId),
+  });
+
+  return result;
+}
+
 export async function getOrgMember(userId: number) {
   const result = await db.query.orgMembers.findFirst({
     where: eq(orgMembers.id, userId),

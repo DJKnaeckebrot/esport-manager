@@ -8,14 +8,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Edit, MoreHorizontal, Trash, X } from "lucide-react";
-import { type OrgMember } from "@/lib/db/schema";
+import { OrgApplicant } from "@/lib/db/schema";
 import { useRouter } from "next/navigation";
 import { AlertModal } from "@/components/delete-popover";
 import React, { useState } from "react";
-import { deleteOrgMember } from "@/app/(dashboard)/actions";
 
 interface CellActionProps {
-  data: OrgMember;
+  data: OrgApplicant;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -31,7 +30,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         onClose={() => setOpen(false)}
         userId={data.id}
         loading={loading}
-        onConfirm={() => deleteOrgMember}
       />
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
@@ -43,7 +41,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Aktionen</DropdownMenuLabel>
           <DropdownMenuItem
-            onClick={() => router.push(`/dashboard/mitglieder/${data.id}`)}
+            onClick={() => router.push(`/dashboard/bewerber/${data.id}`)}
           >
             <Edit className="mr-2 h-4 w-4" /> Bearbeiten
           </DropdownMenuItem>

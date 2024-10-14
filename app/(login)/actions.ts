@@ -436,6 +436,16 @@ export const inviteTeamMember = validatedActionWithUser(
       return { error: "An invitation has already been sent to this email" };
     }
 
+    const existingUser = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, email))
+      .limit(1);
+
+    if (existingUser.length > 0) {
+      return { error: "User already exists" };
+    }
+
     // Create a new invitation
     await db.insert(invitations).values({
       teamId: userWithTeam.teamId,
@@ -484,9 +494,5 @@ export const inviteTeamMember = validatedActionWithUser(
     } catch (error) {
       return { error: `Error sending out invite: ${error}` };
     }
-
-    //await sendInvitationEmail(email, userWithTeam.team.name, role);
-
-    return { success: "Invitation sent successfully" };
   }
 );

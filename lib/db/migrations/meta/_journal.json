@@ -43,6 +43,13 @@
       "when": 1728476587637,
       "tag": "0005_regular_toad",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1728637977944,
+      "tag": "0006_mean_misty_knight",
+      "breakpoints": true
     }
   ]
 }

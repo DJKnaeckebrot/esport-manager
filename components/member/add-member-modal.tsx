@@ -21,7 +21,10 @@ export default function AddMemberModal() {
 
   return (
     <>
-      <Button onClick={() => setShowAddMenu(!showAddMenu)}>
+      <Button
+        className="bg-orange-500 hover:bg-orange-600 text-white"
+        onClick={() => setShowAddMenu(!showAddMenu)}
+      >
         Neuen Member hinzufügen
       </Button>
       {showAddMenu && (

@@ -14,6 +14,8 @@ import {
   ActivityType,
   invitations,
   orgMembers,
+  NewOrgApplicant,
+  orgApplicants,
 } from "@/lib/db/schema";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
@@ -108,6 +110,76 @@ export const addOrgMember = validatedActionWithUser(
     );
 
     return { success: "Member added successfully" };
+  }
+);
+
+const addOrgApplicantSchema = z.object({
+  userId: z.string(),
+  userName: z.string(),
+  name: z.string(),
+  rank: z.string(),
+  origin: z.string(),
+  playStyle: z.string(),
+  about: z.string(),
+  birthday: z.string(),
+  epicId: z.string(),
+});
+
+export const addOrgApplicant = validatedActionWithUser(
+  addOrgApplicantSchema,
+  async (data, _, user) => {
+    const {
+      userId,
+      userName,
+      name,
+      rank,
+      origin,
+      playStyle,
+      about,
+      birthday,
+      epicId,
+    } = data;
+
+    console.log("Adding Applicant to Org: ", userName);
+
+    const userWithTeam = await getUserWithTeam(user.id);
+
+    if (!userWithTeam?.teamId) {
+      return { error: "User is not part of a team" };
+    }
+
+    const newApplicant: NewOrgApplicant = {
+      userName: userName,
+      userId: userId,
+      orgId: userWithTeam.teamId,
+      epicId,
+      name,
+      rank,
+      origin,
+      playStyle,
+      about,
+      birthday: new Date(birthday),
+      status: "pending",
+    };
+
+    const [createdApplicant] = await db
+      .insert(orgApplicants)
+      .values(newApplicant)
+      .returning();
+
+    if (!createdApplicant) {
+      return { error: "Failed to create applicant. Please try again." };
+    }
+
+    await logActivity(
+      userWithTeam.teamId,
+      user.id,
+      ActivityType.CREATE_ORG_APPLICANT,
+      undefined,
+      newApplicant.userName
+    );
+
+    return { success: "Applicant added successfully" };
   }
 );
 

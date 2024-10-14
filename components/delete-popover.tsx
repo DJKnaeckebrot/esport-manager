@@ -8,7 +8,7 @@ import { Trash } from "lucide-react";
 interface AlertModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm?: () => void;
+  onConfirm: () => void;
   loading: boolean;
   userId: number;
 }

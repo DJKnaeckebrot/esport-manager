@@ -91,6 +91,25 @@ export const orgTeams = pgTable("org_teams", {
   teamName: integer("teamName").notNull(),
 });
 
+export const orgApplicants = pgTable("org_applicants", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id", { length: 20 }).notNull(),
+  userName: varchar("user_name", { length: 100 }).notNull(),
+  orgId: integer("team_id")
+    .notNull()
+    .references(() => teams.id),
+  epicId: varchar("epic_id", { length: 50 }).notNull(),
+  name: varchar("name", { length: 100 }).notNull(),
+  playStyle: varchar("play_style", { length: 50 }).notNull(),
+  birthday: timestamp("birthday").notNull(),
+  origin: varchar("origin", { length: 50 }).notNull(),
+  about: varchar("about", { length: 255 }).notNull(),
+  comment: varchar("comment", { length: 255 }),
+  rank: varchar("rank", { length: 50 }).notNull(),
+  status: varchar("status", { length: 50 }).notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 export const orgTeamMembers = pgTable("org_team_members", {
   id: serial("id").primaryKey(),
   userId: integer("user_id")
@@ -157,6 +176,8 @@ export type OrgMember = typeof orgMembers.$inferSelect;
 export type NewOrgMember = typeof orgMembers.$inferInsert;
 export type OrgTeam = typeof orgTeams.$inferSelect;
 export type NewOrgTeam = typeof orgTeams.$inferInsert;
+export type OrgApplicant = typeof orgApplicants.$inferSelect;
+export type NewOrgApplicant = typeof orgApplicants.$inferInsert;
 export type Team = typeof teams.$inferSelect;
 export type NewTeam = typeof teams.$inferInsert;
 export type TeamMember = typeof teamMembers.$inferSelect;
@@ -189,4 +210,7 @@ export enum ActivityType {
   CREATE_ORG_TEAM = "CREATE_ORG_TEAM",
   DELETE_ORG_TEAM = "DELETE_ORG_TEAM",
   UPDATE_ORG_TEAM = "UPDATE_ORG_TEAM",
+  CREATE_ORG_APPLICANT = "CREATE_ORG_APPLICANT",
+  DELETE_ORG_APPLICANT = "DELETE_ORG_APPLICANT",
+  UPDATE_ORG_APPLICANT = "UPDATE_ORG_APPLICANT",
 }
