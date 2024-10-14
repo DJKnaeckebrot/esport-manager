@@ -183,6 +183,47 @@ export const addOrgApplicant = validatedActionWithUser(
   }
 );
 
+const deleteOrgApplicantSchema = z.object({
+  id: z.string(),
+});
+
+export const deleteOrgApplicant = validatedActionWithUser(
+  deleteOrgApplicantSchema,
+  async (data, _, user) => {
+    //const { id } = data;
+    const id = Number(data.id);
+
+    if (isNaN(id)) {
+      return { error: "Invalid ID" };
+    }
+
+    const userWithTeam = await getUserWithTeam(user.id);
+
+    if (!userWithTeam?.teamId) {
+      return { error: "User is not part of a team" };
+    }
+
+    await db
+      .delete(orgApplicants)
+      .where(
+        and(
+          eq(orgApplicants.id, id),
+          eq(orgApplicants.orgId, userWithTeam?.teamId ?? 0)
+        )
+      );
+
+    await logActivity(
+      userWithTeam.teamId,
+      user.id,
+      ActivityType.DELETE_ORG_APPLICANT,
+      undefined,
+      id.toString()
+    );
+
+    return { success: "Applicant has been deleted" };
+  }
+);
+
 const deleteOrgMemberSchema = z.object({
   id: z.string(),
 });
