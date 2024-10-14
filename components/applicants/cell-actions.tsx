@@ -12,6 +12,7 @@ import { OrgApplicant } from "@/lib/db/schema";
 import { useRouter } from "next/navigation";
 import { AlertModal } from "@/components/delete-popover";
 import React, { useState } from "react";
+import { DeleteApplicantModal } from "./delete-applicant-popover";
 
 interface CellActionProps {
   data: OrgApplicant;
@@ -25,11 +26,11 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   return (
     <>
-      <AlertModal
+      <DeleteApplicantModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        userId={data.id}
         loading={loading}
+        userId={data.id}
       />
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
