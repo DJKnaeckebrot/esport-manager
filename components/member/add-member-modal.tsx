@@ -19,9 +19,11 @@ export default function AddMemberModal() {
   >(addOrgMember, { error: "", success: "" });
   const [showAddMenu, setShowAddMenu] = useState(false);
 
-  if (!isAddPending && addState?.success) {
-    setShowAddMenu(false);
-  }
+  useEffect(() => {
+    if (!isAddPending && addState?.success) {
+      setShowAddMenu(false);
+    }
+  }, [isAddPending, addState?.success]);
 
   return (
     <>

@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { addOrgApplicant } from "@/app/(dashboard)/actions";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "../ui/label";
 
@@ -21,9 +21,11 @@ export default function AddApplicantModal() {
   >(addOrgApplicant, { error: "", success: "" });
   const [showAddMenu, setShowAddMenu] = useState(false);
 
-  if (!isAddPending && addState?.success) {
-    setShowAddMenu(false);
-  }
+  useEffect(() => {
+    if (!isAddPending && addState?.success) {
+      setShowAddMenu(false);
+    }
+  }, [isAddPending, addState?.success]);
 
   return (
     <>
