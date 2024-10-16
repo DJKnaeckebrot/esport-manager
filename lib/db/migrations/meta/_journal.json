@@ -50,6 +50,13 @@
       "when": 1728637977944,
       "tag": "0006_mean_misty_knight",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1729072174906,
+      "tag": "0007_sparkling_lucky_pierre",
+      "breakpoints": true
     }
   ]
 }

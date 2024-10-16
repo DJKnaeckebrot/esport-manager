@@ -5,6 +5,7 @@ import {
   text,
   timestamp,
   integer,
+  boolean,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { object } from "zod";
@@ -30,6 +31,8 @@ export const teams = pgTable("teams", {
   stripeProductId: text("stripe_product_id"),
   planName: varchar("plan_name", { length: 50 }),
   subscriptionStatus: varchar("subscription_status", { length: 20 }),
+  customBranding: boolean("custom_branding").notNull().default(false),
+  customBrandingLogo: text("custom_branding_logo"),
 });
 
 export const teamMembers = pgTable("team_members", {
