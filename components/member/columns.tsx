@@ -55,7 +55,7 @@ export const columns: ColumnDef<OrgMember>[] = [
           row.original.activityStatus === "inactive" ? "destructive" : "default"
         }
       >
-        {row.original.activityStatus}
+        {row.original.activityStatus === "active" ? "aktiv" : "inaktiv"}
       </Badge>
     ),
   },
