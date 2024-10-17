@@ -25,6 +25,7 @@ import {
   validatedAction,
   validatedActionWithUser,
 } from "@/lib/auth/middleware";
+import Logena from "logena";
 
 async function logActivity(
   teamId: number | null | undefined,
@@ -76,7 +77,9 @@ export const addOrgMember = validatedActionWithUser(
   async (data, _, user) => {
     const { userId, userName, epicId, activityStatus } = data;
 
-    console.log("Adding Member to Org: ", userName);
+    Logena.info(`Adding Member to Org: ${userName}`);
+
+    //console.log("Adding Member to Org: ", userName);
 
     const userWithTeam = await getUserWithTeam(user.id);
 
@@ -275,7 +278,7 @@ const updateOrgApplicantSchema = z.object({
   origin: z.string(),
   playStyle: z.string(),
   about: z.string(),
-  birthday: z.date(),
+  birthday: z.string(),
   status: z.string(),
 });
 
@@ -284,6 +287,7 @@ export const updateOrgApplicant = validatedActionWithUser(
   async (data, _, user) => {
     //const { id } = data;
     const id = Number(data.id);
+    const bday = new Date(data.birthday);
 
     if (isNaN(id)) {
       return { error: "Invalid ID" };
@@ -298,6 +302,7 @@ export const updateOrgApplicant = validatedActionWithUser(
     const updatedData = {
       ...data,
       id,
+      birthday: bday,
     };
 
     await db
@@ -371,5 +376,39 @@ export const updateOrgMember = validatedActionWithUser(
     );
 
     return { success: "Member has been updated" };
+  }
+);
+
+const updateTeamDataSchema = z.object({
+  customBrandingString: z.string(),
+  customBrandingLogo: z.string(),
+  name: z.string(),
+});
+
+export const updateTeamData = validatedActionWithUser(
+  updateTeamDataSchema,
+  async (data, _, user) => {
+    const { customBrandingLogo, customBrandingString, name } = data;
+    const userWithTeam = await getUserWithTeam(user.id);
+
+    const customBranding = customBrandingString === "true" ? true : false;
+
+    if (!userWithTeam?.teamId) {
+      return { error: "User is not part of a team" };
+    }
+
+    const updatedData = {
+      ...data,
+      customBranding,
+    };
+
+    await db
+      .update(teams)
+      .set(updatedData)
+      .where(eq(teams.id, userWithTeam.teamId));
+
+    await logActivity(userWithTeam.teamId, user.id, ActivityType.UPDATE_TEAM);
+
+    return { success: "Team successfully updated" };
   }
 );
