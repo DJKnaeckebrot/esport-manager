@@ -21,7 +21,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
   );
 
   return (
-    <div className="min-h-[100dvh] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-[100dvh] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
           <svg
@@ -137,7 +137,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
               <div className="w-full border-t border-gray-300" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-gray-50 dark:bg-gray-900 dark:text-gray-400 text-gray-500">
+              <span className="px-2 bg-background dark:text-gray-400 text-gray-500">
                 {mode === "signin"
                   ? "Neu bei uns?"
                   : "Du hast schon einen Account?"}
