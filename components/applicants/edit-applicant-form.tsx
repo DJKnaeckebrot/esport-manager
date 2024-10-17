@@ -72,6 +72,8 @@ export function EditApplicantForm({ user }: InviteTeamMemberProps) {
     }));
   };
 
+  console.log("formData", formData);
+
   return (
     <Card>
       <CardHeader>
@@ -122,7 +124,11 @@ export function EditApplicantForm({ user }: InviteTeamMemberProps) {
               className="mb-4"
             />
             <Label htmlFor="playStyle">Spielstil</Label>
-            <Select name="playStyle" defaultValue={formData.playStyle}>
+            <Select
+              name="playStyle"
+              defaultValue={formData.playStyle}
+              onValueChange={(v) => setFormData({ ...formData, playStyle: v })}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Spielstil des Bewerber" />
               </SelectTrigger>
@@ -132,7 +138,11 @@ export function EditApplicantForm({ user }: InviteTeamMemberProps) {
               </SelectContent>
             </Select>
             <Label htmlFor="origin">Herkunft</Label>
-            <Select name="origin" defaultValue={formData.origin}>
+            <Select
+              name="origin"
+              defaultValue={formData.origin}
+              onValueChange={(v) => setFormData({ ...formData, origin: v })}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Die Herkunft des Bewerber" />
               </SelectTrigger>
@@ -223,11 +233,12 @@ export function EditApplicantForm({ user }: InviteTeamMemberProps) {
               </SelectContent>
             </Select>
           </div>
-          {/* {updateState?.error &&
-            toast(`Gespeichert!`, {
-              description: `${updateState.error}`,
-            })}
-          {updateState?.success && toast(`${updateState.success}`)} */}
+          {updateState?.error && (
+            <p className="text-red-500">{updateState.error}</p>
+          )}
+          {updateState?.success && (
+            <p className="text-green-500">{updateState.success}</p>
+          )}
           <Button
             type="submit"
             className="bg-orange-500 hover:bg-orange-600 text-white"
