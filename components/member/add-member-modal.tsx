@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { addOrgMember } from "@/app/(dashboard)/actions";
+import { addOrgMember } from "@/app/(dashboard)/(marketing)/actions";
 import { useActionState, useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "../ui/label";

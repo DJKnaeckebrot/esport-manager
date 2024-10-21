@@ -1,6 +1,6 @@
 "use client";
 
-import { updateOrgMember } from "@/app/(dashboard)/actions";
+import { updateOrgMember } from "@/app/(dashboard)/(marketing)/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

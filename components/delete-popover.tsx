@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
-import { deleteOrgMember } from "@/app/(dashboard)/actions";
+import { deleteOrgMember } from "@/app/(dashboard)/(marketing)/actions";
 import { Trash } from "lucide-react";
 
 interface AlertModalProps {

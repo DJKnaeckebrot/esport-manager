@@ -12,7 +12,7 @@ import { type OrgMember } from "@/lib/db/schema";
 import { useRouter } from "next/navigation";
 import { AlertModal } from "@/components/delete-popover";
 import React, { useState } from "react";
-import { deleteOrgMember } from "@/app/(dashboard)/actions";
+import { deleteOrgMember } from "@/app/(dashboard)/(marketing)/actions";
 
 interface CellActionProps {
   data: OrgMember;

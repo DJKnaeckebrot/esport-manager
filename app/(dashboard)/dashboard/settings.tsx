@@ -12,7 +12,7 @@ import { UploadButton } from "@/lib/upload/uploadthing";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Loader2, PlusCircle } from "lucide-react";
-import { updateTeamData } from "../actions";
+import { updateTeamData } from "../(marketing)/actions";
 
 type ActionState = {
   error?: string;
